@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>尚珥骁 · 个人简历手账本</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📓</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="assets/img/thumb/portrait.webp" fetchpriority="high">
+<link rel="preload" as="image" href="assets/img/thumb/cam-campus.webp">
+<link rel="preload" as="image" href="assets/img/thumb/cam-night.webp">
+<link rel="preload" as="image" href="assets/img/thumb/cam-college.webp">
+<link rel="preload" as="image" href="assets/img/thumb/cam-gate.webp">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Zhi+Mang+Xing&family=Noto+Serif+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F3E3B4;
+  --paper-2:#EAD79C;
+  --paper-shadow:#D6BD7C;
+  --ink:#2E2A22;
+  --ink-soft:#6b6152;
+  --stamp:#A6382A;
+  --stamp-soft:#c15a4a;
+  --tape:#8B9A73;
+  --tape-2:#c9b896;
+  --gold:#AD8A46;
+  --rule:#d0b988;
+  --white-page:#FAF1D9;
+}
+*{box-sizing:border-box;}
+/* fluid type: ~15px on phones -> 16px on desktop, times the reader's own choice (--fs, set by the Aa slider) */
+html{font-size:calc(var(--fs,1) * clamp(15px, 14.1px + 0.15vw, 16px));-webkit-text-size-adjust:100%;}
+html,body{margin:0;padding:0;}
+body{
+  background:var(--paper);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(173,138,70,0.06), transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(139,154,115,0.07), transparent 40%);
+  font-family:'Times New Roman','Noto Serif SC',serif;
+  color:var(--ink);
+  min-height:100vh;
+  overflow-x:hidden;
+  position:relative;
+}
+.topbar,.notebook-wrap{position:relative;z-index:1;}
+.topbar{z-index:5;}   /* keeps the Aa pop-up above the notebook */
+.hand{font-family:'Caveat','Zhi Mang Xing',cursive;}
+::selection{background:var(--tape);color:#fff;}
+
+/* top bar */
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 28px;
+  max-width:1180px;margin:0 auto;
+}
+.brand{
+  font-family:'Caveat','Zhi Mang Xing',cursive;
+  font-size:1.625rem;color:var(--ink-soft);
+}
+.lang-toggle{
+  display:flex;gap:2px;
+  background:var(--paper-2);
+  border:1px solid var(--rule);
+  border-radius:999px;
+  padding:3px;
+}
+.lang-toggle button{
+  border:none;background:transparent;
+  padding:6px 14px;border-radius:999px;
+  font-family:'Times New Roman','Noto Serif SC',serif;
+  font-size:0.8125rem;letter-spacing:.02em;
+  cursor:pointer;color:var(--ink-soft);
+  transition:background .25s, color .25s;
+}
+.lang-toggle button.active{
+  background:var(--stamp);color:#fff;
+}
+
+/* font-size control */
+.top-actions{display:flex;align-items:center;gap:10px;}
+.fs-ctl{position:relative;}
+.fs-btn{
+  width:38px;height:34px;border-radius:999px;border:1px solid var(--rule);
+  background:var(--paper-2);color:var(--ink-soft);cursor:pointer;
+  font-family:'Times New Roman',serif;font-size:0.9375rem;
+}
+.fs-btn[aria-expanded="true"]{background:var(--stamp);color:#fff;border-color:var(--stamp);}
+.fs-pop{
+  position:absolute;right:0;top:calc(100% + 8px);z-index:100;
+  width:230px;padding:12px 14px;border-radius:12px;
+  background:var(--white-page);border:1px solid var(--rule);
+  box-shadow:0 12px 28px -12px rgba(60,45,20,.4);
+}
+.fs-pop[hidden]{display:none;}
+.fs-row{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:0.8125rem;color:var(--ink-soft);margin-bottom:8px;}
+.fs-row b{color:var(--stamp);font-weight:600;}
+.fs-row input{flex:1;accent-color:var(--stamp);}
+.fs-a{font-family:'Times New Roman',serif;color:var(--ink-soft);}
+.fs-a.sm{font-size:12px;}
+.fs-a.lg{font-size:19px;}
+.fs-reset{font:inherit;font-size:0.75rem;border:1px solid var(--rule);background:transparent;color:var(--ink-soft);border-radius:999px;padding:3px 12px;cursor:pointer;}
+
+/* notebook shell */
+.notebook-wrap{
+  max-width:1180px;margin:10px auto 60px;
+  padding:0 20px;
+  display:flex;gap:0;
+}
+.spine{
+  width:34px;flex:0 0 34px;
+  background:linear-gradient(180deg,var(--paper-shadow),var(--paper-2));
+  border-radius:14px 0 0 14px;
+  position:relative;
+  box-shadow:inset -6px 0 10px -6px rgba(0,0,0,.15);
+}
+.spine::before{
+  content:'';
+  position:absolute;top:24px;bottom:24px;left:50%;
+  width:2px;transform:translateX(-50%);
+  background:repeating-linear-gradient(180deg,transparent 0 14px, var(--ink-soft) 14px 16px);
+  opacity:.35;
+}
+.ring{
+  position:absolute;left:50%;transform:translateX(-50%);
+  width:16px;height:16px;border-radius:50%;
+  border:3px solid var(--ink-soft);
+  opacity:.28;background:var(--paper);
+}
+
+.book{
+  flex:1;position:relative;
+  background:var(--white-page);
+  border-radius:0 14px 14px 0;
+  box-shadow:0 18px 40px -20px rgba(60,45,20,.35), 0 2px 0 var(--paper-shadow);
+  min-height:640px;
+  display:flex;
+}
+/* tabs */
+.tabs{
+  width:88px;flex:0 0 88px;
+  display:flex;flex-direction:column;
+  padding:56px 0 20px;
+  gap:10px;
+}
+.tab{
+  border:none;cursor:pointer;
+  padding:12px 6px;
+  font-family:'Caveat','Zhi Mang Xing',cursive;
+  font-size:1.0625rem;
+  writing-mode:vertical-rl;text-orientation:mixed;
+  border-radius:8px 0 0 8px;
+  background:var(--paper-2);
+  color:var(--ink-soft);
+  box-shadow: -2px 2px 4px rgba(0,0,0,.06);
+  transition:transform .2s, background .2s, color .2s;
+  min-height:104px;
+}
+.tab:hover{transform:translateX(-3px);}
+.tab.active{
+  background:var(--white-page);
+  color:var(--stamp);
+  box-shadow: -2px 2px 4px rgba(0,0,0,.1);
+  transform:translateX(-6px);
+}
+
+/* headings */
+h1.page-title{
+  font-family:'Caveat','Zhi Mang Xing',cursive;
+  font-size:clamp(2.1rem, 1.6rem + 1.9vw, 2.75rem);color:var(--ink);
+  margin:0 0 4px;
+}
+.page-sub{
+  font-size:0.8125rem;color:var(--ink-soft);
+  letter-spacing:.03em;margin-bottom:26px;
+  border-bottom:1px dashed var(--rule);
+  padding-bottom:16px;
+}
+
+/* cover */
+.cover{display:flex;flex-direction:column;gap:28px;}
+.cover-collage{
+  position:relative;
+  width:100%;max-width:680px;
+  aspect-ratio:2.2/1;
+  margin:0 auto;
+}
+.collage-item{
+  position:absolute;
+  width:23%;aspect-ratio:3/4.3;
+  padding:6px 6px 16px;
+  background:#fff;
+  box-shadow:0 6px 16px rgba(60,45,20,.22);
+  cursor:pointer;
+  transform:rotate(var(--r,0deg));
+  transition:transform .35s cubic-bezier(.2,.8,.3,1), box-shadow .35s, z-index 0s;
+  z-index:1;
+}
+.collage-item img{display:block;width:100%;height:100%;object-fit:cover;object-position:var(--pos,50% 50%);}
+.collage-item:hover{
+  transform:rotate(0deg) scale(1.15);
+  box-shadow:0 16px 34px rgba(60,45,20,.38);
+  z-index:40;
+}
+.collage-item.main{z-index:5;}
+.collage-item.main:hover{z-index:41;}
+.cover-text{padding-top:2px;position:relative;z-index:50;}
+.cover-name{
+  font-family:'Caveat','Zhi Mang Xing',cursive;
+  font-size:clamp(2.75rem, 1.9rem + 3.2vw, 4rem);line-height:1;color:var(--ink);
+  margin:0 0 6px;
+}
+/* name story bubble: empty bubble breathes; hover (desktop) / tap (mobile) pops the story */
+.cover-name{position:relative;display:inline-block;}
+.name-bubble{
+  position:absolute;top:-10px;right:-46px;
+  width:40px;height:34px;cursor:pointer;outline:none;
+}
+.nb-icon{display:block;width:100%;height:100%;transform-origin:15% 90%;position:relative;
+  animation:bubbleBreathe 2.4s ease-in-out infinite;transition:transform .2s;}
+/* soft halo that keeps radiating outward while idle */
+.nb-icon::before,.nb-icon::after{
+  content:'';position:absolute;left:4px;top:1px;width:34px;height:28px;border-radius:50%;
+  border:1.5px solid rgba(201,168,92,.6);background:rgba(255,248,225,.3);
+  animation:bubbleHalo 2.4s ease-out infinite;pointer-events:none;
+}
+.nb-icon::after{animation-delay:1.2s;}
+@keyframes bubbleHalo{0%{transform:scale(.9);opacity:.8;}100%{transform:scale(1.9);opacity:0;}}
+.nb-icon svg{width:100%;height:100%;overflow:visible;display:block;}
+.name-bubble:focus-visible .nb-icon{filter:drop-shadow(0 0 3px #D6BD7C);}
+@keyframes bubbleBreathe{0%,100%{transform:scale(.92) translateY(0);}50%{transform:scale(1.15) translateY(-2px);}}
+.name-pop{
+  position:absolute;left:14px;bottom:calc(100% + 12px);
+  width:min(380px,78vw);padding:14px 16px 6px;
+  background:#fff;border:1.5px solid #D2B574;border-radius:16px;
+  box-shadow:0 10px 26px rgba(60,45,20,.18);
+  font-family:'Times New Roman','Noto Serif SC',serif;
+  font-size:0.8125rem;line-height:1.75;color:var(--ink);text-align:left;
+  opacity:0;visibility:hidden;transform:translateY(6px) scale(.96);transform-origin:left bottom;
+  transition:opacity .22s, transform .22s, visibility .22s;
+  z-index:60;cursor:default;
+}
+.name-pop p{margin:0 0 8px;}
+.name-pop b{color:var(--stamp);}
+.name-bubble:hover .nb-icon,.name-bubble:focus .nb-icon,.name-bubble.open .nb-icon{animation:none;transform:scale(1.12) rotate(-4deg);}
+.name-bubble:hover .nb-icon::before,.name-bubble:hover .nb-icon::after,.name-bubble:focus .nb-icon::before,.name-bubble:focus .nb-icon::after,.name-bubble.open .nb-icon::before,.name-bubble.open .nb-icon::after{animation:none;opacity:0;}
+.name-bubble:hover .name-pop,.name-bubble:focus .name-pop,.name-bubble.open .name-pop{
+  opacity:1;visibility:visible;transform:none;
+}
+.name-pop.below{bottom:auto;top:calc(100% + 44px);transform-origin:left top;}
+@media(prefers-reduced-motion:reduce){.nb-icon,.nb-icon::before,.nb-icon::after{animation:none;}.nb-icon::before,.nb-icon::after{opacity:0;}}
+
+.cover-tagline{
+  font-size:1rem;color:var(--ink-soft);margin-bottom:20px;
+  font-family:'Times New Roman','Noto Serif SC',serif;
+}
+.cover-meta{font-size:0.875rem;color:var(--ink-soft);line-height:2;margin-bottom:6px;}
+.cover-meta b{color:var(--ink);font-weight:600;}
+.cover-hint{
+  margin-top:22px;color:var(--ink-soft);
+  font-family:'Caveat','Zhi Mang Xing',cursive;font-size:1.1875rem;
+  opacity:.85;
+}
+
+/* timeline */
+.timeline{position:relative;padding-left:26px;}
+.timeline::before{
+  content:'';position:absolute;left:6px;top:6px;bottom:6px;width:2px;
+  background:var(--rule);
+}
+.t-item{position:relative;margin-bottom:34px;}
+.t-item::before{
+  content:'';position:absolute;left:-26px;top:5px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--stamp);border:2px solid var(--white-page);
+}
+.t-date{
+  font-family:'Caveat','Zhi Mang Xing',cursive;
+  font-size:1.25rem;color:var(--stamp);margin-bottom:2px;
+}
+.t-title{font-size:1rem;font-weight:600;margin-bottom:4px;}
+.t-role{font-size:0.8125rem;color:var(--ink-soft);margin-bottom:8px;}
+.t-desc{font-size:0.8438rem;line-height:1.75;color:#3f3a30;max-width:66ch;}
+.t-thumbs{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;align-items:flex-start;}
+.polaroid{
+  background:#fff;padding:6px 6px 7px;
+  box-shadow:0 4px 10px rgba(0,0,0,.14);
+  width:96px;cursor:pointer;
+  transform:rotate(var(--r,-2deg));
+  transition:transform .2s;
+}
+.polaroid:hover{transform:rotate(0deg) scale(1.04);}
+.polaroid img{width:100%;height:70px;object-fit:cover;display:block;}
+.polaroid span{
+  display:block;font-family:'Caveat','Zhi Mang Xing',cursive;
+  font-size:0.75rem;text-align:center;margin-top:4px;color:var(--ink-soft);
+}
+
+/* two column generic */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:30px;}
+@media(max-width:760px){.grid2{grid-template-columns:1fr;}}
+
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.badge{
+  font-size:0.75rem;padding:4px 10px;border-radius:999px;
+  border:1px solid var(--rule);color:var(--ink-soft);
+  background:var(--paper-2);
+}
+
+.skill-block h3{
+  font-family:'Caveat','Zhi Mang Xing',cursive;font-size:1.375rem;
+  color:var(--stamp);margin:0 0 8px;
+}
+.skill-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.skill-tag{
+  font-size:0.7812rem;padding:5px 11px;border-radius:6px;
+  background:var(--paper-2);color:var(--ink);
+  border:1px solid var(--rule);
+}
+
+.contact-list{list-style:none;padding:0;margin:0 0 24px;}
+.contact-list li{
+  display:flex;gap:10px;align-items:center;
+  font-size:0.9062rem;margin-bottom:12px;color:var(--ink);
+}
+.contact-list a{color:var(--stamp);text-decoration:none;border-bottom:1px dashed var(--stamp);}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--tape);flex:0 0 8px;}
+
+.project-links{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;}
+.project-card{
+  border:1px solid var(--rule);border-radius:10px;
+  padding:14px 16px;background:var(--paper-2);
+}
+.project-card .pc-title{font-family:'Caveat','Zhi Mang Xing',cursive;font-size:1.25rem;color:var(--ink);margin-bottom:4px;}
+.project-card .pc-desc{font-size:0.7812rem;color:var(--ink-soft);line-height:1.6;}
+.project-card .pc-status{
+  display:inline-block;margin-top:8px;font-size:0.6875rem;color:var(--stamp);
+  border:1px solid var(--stamp);padding:2px 8px;border-radius:999px;
+}
+
+.note{
+  font-family:'Caveat','Zhi Mang Xing',cursive;
+  font-size:1rem;color:var(--ink-soft);
+  transform:rotate(-1.5deg);margin-top:6px;
+}
+
+/* cover polaroids: washi tape on top */
+.collage-item .tape{
+  position:absolute;top:-9px;left:50%;width:46px;height:16px;
+  transform:translateX(-50%) rotate(var(--tr,-4deg));
+  background:rgba(201,184,150,.55);
+  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.18) 0 4px,transparent 4px 8px);
+  box-shadow:0 1px 2px rgba(0,0,0,.08);
+}
+@media(max-width:820px){.collage-item .tape{width:30px;height:11px;top:-6px;}}
+
+/* image fade-in: paper + text paint first, photos fade in when decoded */
+img.fade{opacity:0;transition:opacity .45s ease;}
+img.fade.loaded{opacity:1;}
+.collage-item,.polaroid,.hobby-photo{background-color:#fff;}
+.polaroid img,.collage-item img{background:var(--paper-2);}
+
+/* inside the cabin overlay: the cabin supplies the language switch */
+html.embedded .notebook-wrap{margin-bottom:24px;}
+
+/* "back to the cabin" — only inside the cabin overlay */
+.home-btn{display:none;align-items:center;gap:7px;height:36px;padding:0 16px 0 12px;border:none;border-radius:999px;
+  background:var(--stamp);color:#fff;font-family:'Times New Roman','Noto Serif SC',serif;font-size:0.875rem;cursor:pointer;
+  box-shadow:0 6px 16px -6px rgba(166,56,42,.7);transition:transform .15s, box-shadow .15s;white-space:nowrap;}
+.home-btn:hover{transform:translateY(-1px);box-shadow:0 10px 20px -8px rgba(166,56,42,.8);}
+.home-btn svg{width:20px;height:20px;flex:0 0 20px;}
+html.embedded .home-btn{display:inline-flex;}
+@media(max-width:640px){
+  html.embedded .home-btn{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:200;height:42px;padding:0 20px 0 14px;font-size:0.9375rem;}
+  html.embedded .home-btn:hover{transform:translateX(-50%);}
+  html.embedded footer{padding-bottom:84px;}
+}
+
+/* lightbox */
+.lightbox{
+  position:fixed;inset:0;background:rgba(30,25,15,.82);
+  display:none;align-items:center;justify-content:center;
+  z-index:999;padding:30px;
+}
+.lightbox.show{display:flex;}
+.lightbox img{max-width:min(92vw,900px);max-height:86vh;box-shadow:0 20px 50px rgba(0,0,0,.5);background:#fff;padding:8px;}
+.lightbox-close{
+  position:absolute;top:22px;right:30px;color:#fff;font-size:1.875rem;
+  cursor:pointer;font-family:'Caveat','Zhi Mang Xing',cursive;
+}
+.lb-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.6);
+  background:rgba(0,0,0,.25);color:#fff;font-size:1.625rem;line-height:1;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;z-index:2;
+}
+.lb-nav:hover{background:rgba(255,255,255,.18);}
+.lb-prev{left:18px;}
+.lb-next{right:18px;}
+.lb-count{position:absolute;top:26px;left:30px;color:#fff;font-size:0.875rem;letter-spacing:.05em;opacity:.85;}
+.lightbox.single .lb-nav,.lightbox.single .lb-count{display:none;}
+@media(max-width:820px){.lb-nav{width:38px;height:38px;font-size:1.375rem;}.lb-prev{left:8px;}.lb-next{right:8px;}}
+.lightbox-download{
+  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
+  color:#fff;font-size:0.875rem;border:1px solid #fff;padding:8px 18px;
+  border-radius:999px;text-decoration:none;
+}
+
+footer{
+  text-align:center;font-size:0.75rem;color:var(--ink-soft);
+  padding:20px 16px 40px;line-height:1.7;overflow-wrap:anywhere;
+}
+
+@media(max-width:820px){
+  .topbar{padding:14px 16px;gap:10px;}
+  .brand{font-size:1.3rem;white-space:nowrap;}
+  .notebook-wrap{flex-direction:column;padding:0 10px;}
+  .spine{display:none;}
+  .book{border-radius:14px;flex-direction:column;}
+  .tabs{
+    flex-direction:row;width:100%;padding:10px 10px 0;overflow-x:auto;
+  }
+  .tab{writing-mode:horizontal-tb;min-height:auto;border-radius:8px 8px 0 0;white-space:nowrap;padding:10px 14px;font-size:1rem;}
+  .cover{flex-direction:column;}
+  .pages-area{order:2;}
+  .page{padding:26px 20px 30px;}
+  .tabs{order:1;}
+  .nav-btns{bottom:10px;}
+}
+
+/* hobbies page */
+.hobbies-intro{font-size:0.875rem;color:var(--ink-soft);line-height:1.8;margin-bottom:22px;max-width:60ch;}
+.hobby-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;}
+.hobby-photo{
+  aspect-ratio:1/1;overflow:hidden;cursor:pointer;
+  box-shadow:0 4px 10px rgba(0,0,0,.12);
+}
+.hobby-photo img{width:100%;height:100%;object-fit:cover;transition:transform .3s;}
+.hobby-photo:hover img{transform:scale(1.08);}
+.hobby-empty{
+  font-family:'Caveat','Zhi Mang Xing',cursive;font-size:1.375rem;
+  color:var(--ink-soft);opacity:.7;padding:30px 0;
+}
+
+/* page nav: tap-to-turn is handled in JS via click-position detection */
+.nav-btns{
+  position:absolute;bottom:14px;left:50%;transform:translateX(-50%);
+  display:flex;gap:14px;z-index:35;
+}
+.nav-btn{
+  width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--rule);background:rgba(255,255,255,.7);
+  color:var(--ink-soft);font-size:0.9375rem;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.1);
+}
+.nav-btn:hover{background:#fff;color:var(--stamp);}
+.nav-btn[disabled]{opacity:.3;cursor:default;}
+.nav-btn[disabled]:hover{background:rgba(255,255,255,.7);color:var(--ink-soft);}
+
+
+/* === simple page transition (slide + tap zones) === */
+.pages-area{
+  flex:1;position:relative;overflow:hidden;
+}
+#pagesInner{position:relative;width:100%;height:100%;}
+.page{
+  position:absolute;inset:0;
+  padding:44px 46px 40px;
+  opacity:0;pointer-events:none;
+  transform:translateX(18px);
+  transition:opacity .35s ease, transform .4s ease;
+  overflow:auto;
+  background:var(--white-page);
+}
+.page.active{
+  opacity:1;pointer-events:auto;
+  position:relative;
+  transform:translateX(0);
+}
+.page-num{
+  font-family:'Caveat','Zhi Mang Xing',cursive;
+  font-size:1.25rem;color:var(--stamp);
+  position:absolute;top:18px;right:26px;
+}
+.page-nav-zone{
+  position:absolute;top:0;bottom:0;width:26px;z-index:3;
+  cursor:pointer;
+}
+.page-nav-zone.left{left:0;}
+.page-nav-zone.right{right:0;}
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand" id="brand">📓 Erxiao's Notebook</div>
+  <div class="top-actions">
+  <div class="fs-ctl">
+    <button class="fs-btn" id="fsBtn" aria-expanded="false" aria-controls="fsPop" title="字号">Aa</button>
+    <div class="fs-pop" id="fsPop" hidden>
+      <div class="fs-row"><span id="fsLbl">字号</span><b id="fsVal">100%</b></div>
+      <div class="fs-row"><span class="fs-a sm">A</span><input type="range" id="fsRange" min="85" max="130" step="5" value="100" aria-labelledby="fsLbl"><span class="fs-a lg">A</span></div>
+      <button class="fs-reset" id="fsReset">重置</button>
+    </div>
+  </div>
+  <div class="lang-toggle">
+    <button id="langZh" class="active">中文</button>
+    <button id="langEn">EN</button>
+  </div>
+  <button class="home-btn" id="homeBtn" type="button">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11.5 12 4l8.5 7.5" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M5.5 10.2V20h13v-9.8" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M3 11.2 12 3.3l9 7.9" fill="none" stroke="#FAF1D9" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>
+      <rect x="10" y="14" width="4" height="6" rx=".6" fill="#FAF1D9"/><rect x="15.6" y="5" width="2" height="3.6" fill="#fff"/></svg>
+    <span id="homeLbl">回到小屋</span></button>
+  </div>
+</div>
+
+<div class="notebook-wrap">
+  <div class="spine">
+    <div class="ring" style="top:40px"></div><div class="ring" style="top:110px"></div><div class="ring" style="top:180px"></div><div class="ring" style="top:250px"></div><div class="ring" style="top:320px"></div><div class="ring" style="top:390px"></div><div class="ring" style="top:460px"></div><div class="ring" style="top:530px"></div>
+  </div>
+  <div class="book">
+    <div class="pages-area" id="pagesArea">
+      <div class="page-nav-zone left" id="navZoneLeft"></div>
+      <div class="page-nav-zone right" id="navZoneRight"></div>
+      <div id="pagesInner"></div>
+    </div>
+    <div class="tabs" id="tabs"></div>
+    <div class="nav-btns">
+      <button class="nav-btn" id="navPrev">‹</button>
+      <button class="nav-btn" id="navNext">›</button>
+    </div>
+  </div>
+</div>
+
+<footer>手动整理 · 内容持续更新中 · Made with care · 左右滑动 / 点击边缘 / 方向键翻页</footer>
+
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightboxClose">✕ 关闭</span>
+  <span class="lb-count" id="lbCount"></span>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
+  <a class="lightbox-download" id="lightboxDownload" href="" download>⬇ <span id="lightboxLabel"></span></a>
+</div>
+
+<script>
+const IMG_FILE = {"证件照": "portrait", "cambridge_certificate-1": "cambridge-certificate", "cambridge_transcript-1": "cambridge-transcript", "mcm_M奖-1": "mcm-meritorious", "比赛现场": "mcm-onsite", "华中杯_企业冠名金奖": "huazhong-gold", "华中杯_一等奖": "huazhong-first", "bay_area_cup_一等奖": "gba-first", "bay_area_cup_创新铜奖": "gba-innovation-bronze", "SPSSPRO_理论赛一等奖": "spsspro-first", "SPSSPRO_专业技能证书": "spsspro-skill", "高中数学竞赛省三": "olympiad-third", "讲座公告截图": "lecture-poster", "photo1": "cam-campus", "photo2": "cam-night", "photo3": "cam-college", "photo4_with_professor": "cam-closing", "photo5": "cam-kings", "photo6": "cam-gate", "photo7_formal_hall": "cam-formal-hall", "华中杯_海报原图": "huazhong-poster", "海报展_开幕式": "poster-opening", "海报展_展位全景": "poster-hall", "海报展_优秀海报奖": "poster-award", "海报展_合影1": "poster-team", "辩论_获奖证书": "debate-certificate", "辩论_赛场": "debate-final", "辩论_陈词": "debate-speech", "辩论_颁奖合影": "debate-ceremony"};
+const DATA = {
+zh:{
+  tabs:["封面","教育","竞赛","实习","校园","爱好","作品集","联系"],
+  cover:{
+    name:"尚珥骁",
+    nameStory:`<p><b>珥</b>：本义是古代垂在耳边的玉珠耳饰，即玉耳环。引申义：<i>日珥</i>，太阳边缘喷出的火焰状光晕；古意<i>「珥笔」</i>，把笔插在冠上，随时记录，颇具文思。整体气质温润。</p>
+<p><b>骁</b>：本义是勇猛、健硕的好马。核心字意为骁勇，矫健、有冲劲、敢往前冲，敏捷又有锐气。</p>
+<p>父母给我起的「珥」（温润玉光、细腻观察）＋「骁」（锐气、行动力），一柔一刚，既希望我为人细腻，又希望我有锐气和不服输的信念。</p>`,
+    tagline:"商业分析在读，用数学模型拆解真实世界的决策问题",
+    meta:[
+      ["学校","北师香港浸会大学 · 商业分析专业 · 本科大三在读"],
+      ["GPA","3.60 / 4.0"],
+      ["方向","数据分析 · 数学建模 · AI应用"]
+    ],
+    seals:["美赛\nM奖","华中杯\n一等奖","大湾区杯\n一等奖"]
+  },
+  education:{
+    title:"教育背景",
+    sub:"EDUCATION",
+    items:[
+      {date:"2024.09 - 至今",title:"北师香港浸会大学",role:"商业分析专业 · 本科在读 · CGPA 3.60/4",
+       desc:"主修课程：微积分(A)、线性代数(A-)、商业统计(A)、数据库管理与应用SQL(A)、运筹学(A-)、人工智能与深度学习(A-)、R语言(A)、最优化方法(A)、应用计量经济学(A)。",
+       thumbs:[]},
+      {date:"2026.07",title:"剑桥大学 Murray Edwards College",role:"Innovation and Entrepreneurship in the Era of AI Summer Programme · 成绩 96/100 (A+)",
+       desc:"主修课程：AI Co-Creation Workshop（LLM + AI工作坊）、New Technologies Risk and Responsibility（新兴科技、风险与责任）、Business: The Age of Intelligence — From Hype to Value。完成 Business Strategy 与 AI and Digital Innovation 两门考核模块，累计38小时以上课时。",
+       thumbs:[["cambridge_certificate-1","出席证明"],["cambridge_transcript-1","成绩单 96%"],["photo2","夜色校园"],["photo5","国王学院 King's College"],["photo6","校门留影"],["photo4_with_professor","结业合影"],["photo7_formal_hall","高桌晚宴"]]}
+    ]
+  },
+  competitions:{
+    title:"竞赛经历",
+    sub:"COMPETITIONS",
+    items:[
+      {date:"2026.02",title:"美国大学生数学建模竞赛（MCM/ICM）",role:"队长 · Meritorious Winner（M奖）",
+       desc:"职业体育「竞技—财务」动态决策系统建模：负责多源异构数据整合、多维度可视化分析及核心数学模型构建。Python爬取并清洗多源异构数据，构建四层动态优化系统（SF-DOS），应用逻辑回归识别策略切换点，非线性规划求解球员价值指数（PVI）与ROI效率前沿。",
+       thumbs:[["mcm_M奖-1","M奖证书"]]},
+      {date:"2025.11",title:"第六届「大湾区杯」粤港澳金融数学建模竞赛",role:"个人 · 一等奖 · 创新铜奖",
+       desc:"事件驱动交易量化建模：负责A股事件识别、波动率预测建模及多层风险控制策略设计。基于沪深A股全市场日度数据，构建「事件识别—强度建模—波动预测—策略优化—风险控制」一体化框架，指数/Logistic衰减模型刻画事件冲击强度，分类型建立GARCH、HAR-RV多因子波动率模型，均值-方差优化结合滚动CVaR完成回测。",
+       thumbs:[["bay_area_cup_一等奖","一等奖证书"],["bay_area_cup_创新铜奖","创新铜奖证书"]]},
+      {date:"2025.07",title:"第四届全国大学生数据分析科普竞赛",role:"理论赛 · 广东省一等奖 · 专业技能证书",
+       desc:"由中国现场统计研究会主办，广东省现场统计学会、广州大学承办，考核数据分析专业知识与实践能力。",
+       thumbs:[["SPSSPRO_理论赛一等奖","广东省一等奖"],["SPSSPRO_专业技能证书","专业技能证书"]]},
+      {date:"2025.05",title:"第十七届「华中杯」大学生数学建模挑战赛",role:"队长 · 一等奖 · 企业冠名金奖",
+       desc:"就业预测与人岗匹配研究：主导构建多源数据融合的Stacking集成学习模型。针对多源异构数据与类别不平衡问题，采用「宏观-中观-微观」三级分析框架，SMOTE-ENN采样优化数据分布，贝叶斯优化调参，构建动态权重人岗匹配系统，匹配准确率89.2%。",
+       thumbs:[["华中杯_企业冠名金奖","企业冠名金奖证书"],["华中杯_一等奖","一等奖证书"],["华中杯_海报原图","查看完整海报"]]},
+      {date:"2023.10",title:"全国中学生数学奥林匹克竞赛（预赛）",role:"黑龙江省赛区 · 三等奖",
+       desc:"高中阶段代表哈尔滨市第九中学参赛，黑龙江省赛区三等奖。",
+       thumbs:[["高中数学竞赛省三","三等奖证书"]]}
+    ]
+  },
+  internship:{
+    title:"实习经历",
+    sub:"INTERNSHIP",
+    items:[
+      {date:"2026.07 - 2026.09",title:"黑龙江省交通投资集团有限公司",role:"业务数据分析实习生",
+       desc:"路网流量数据处理与可视化看板搭建，负责数据清洗标准化与指标可视化呈现。使用Python与SQL对路网流量原始数据进行处理，用Power BI搭建可视化看板完成日流量、分时流量、高峰时段分布等核心指标呈现，数据更新周期由按周缩短至按日；参与路段流量对比、节假日流量变化等专题分析。",thumbs:[]},
+      {date:"2026.06 - 2026.07",title:"黑龙江省交易集团有限公司",role:"数智化管理岗",
+       desc:"数据中台建设与阳光招采平台AI模块开发，负责多源异构数据清洗标准化与AI训练样本标注。使用Python与SQL对接3个业务系统数据，清洗约8万条交易记录并完成入库，数据表可用率由78%提升至95%以上；标注200余条样本用于围串标识别模块训练，测试集识别准确率达86%；搭建数据可视化看板，统计周期由按周缩短至按日。",thumbs:[]}
+    ]
+  },
+  campus:{
+    title:"校园经历",
+    sub:"CAMPUS & OUTREACH",
+    items:[
+      {date:"2026.05",title:"第14届理工科技学院海报展",role:"参展者 · Outstanding Poster Award（理工科技学院优秀海报奖）",
+       desc:"作为第十七届「华中杯」大学生数学建模挑战赛企业冠名金奖及一等奖获得者受邀参展，以「就业状态分析与预测」项目向评委与观众展示Stacking集成学习模型的研究成果与应用价值——也是本届数模系列奖项展示中唯一一支来自非理工科技学院（工商管理学院金融经济系）的参展团队，最终获颁理工科技学院优秀海报奖。",
+       thumbs:[["海报展_合影1","展会合影"],["海报展_开幕式","开幕式现场"],["海报展_展位全景","展位全景"],["海报展_优秀海报奖","优秀海报奖证书"]]},
+      {date:"2026.03",title:"数学建模及论文写作技巧分享讲座",role:"主讲人 · UIC 数模Club 邀请",
+       desc:"作为2025年第十七届「华中杯」企业冠名金奖及一等奖获得者，受邀为备赛同学分享建模思路、数据处理方法与论文写作技巧。",
+       thumbs:[["讲座公告截图","讲座预告"],["比赛现场","讲座现场"]]},
+      {date:"2025 - 2026",title:"校内奖学金",role:"竞赛奖学金（2025、2026年度）· 校一/二等奖学金（2026年度）",
+       desc:"因竞赛表现与学业成绩获得校方奖学金认可。",thumbs:[]},
+      {date:"2024.11",title:"2024北师港浸大辩论新生杯",role:"冠军 Champion",
+       desc:"作为学校辩论队新生代表参赛，在决赛中就「通过制造爆款的方式发展传统文化是否可取」等议题进行陈词与质询，最终率队夺得冠军。",
+       thumbs:[["辩论_获奖证书","获奖证书"],["辩论_赛场","决赛现场"],["辩论_陈词","陈词环节"],["辩论_颁奖合影","颁奖合影"]]}
+    ]
+  },
+  hobbies:{
+    title:"爱好",
+    sub:"PHOTOGRAPHY & TRAVEL",
+    intro:"摄影与旅行——摄影的兴趣大多诞生在旅途之中，用镜头记录走过的地方。以下影像会持续更新。",
+    gallery:[]
+  },
+  portfolio:{
+    title:"作品集",
+    sub:"PORTFOLIO · VIBE CODING",
+    intro:"用 AI 辅助从零搭建的小作品，持续更新中。",
+    projects:[
+      {title:"数学建模科普站",desc:"从0到1的建模思路与提示词整理",status:"建设中"},
+      {title:"AI Prompt 工具库",desc:"可分类检索的提示词卡片库",status:"建设中"},
+      {title:"数据可视化 Dashboard",desc:"交互式图表分析项目",status:"建设中"},
+      {title:"算法可视化工具",desc:"排序 / 图论算法动态演示",status:"建设中"}
+    ]
+  },
+  skills:{
+    title:"技能 & 联系",
+    sub:"SKILLS & CONTACT",
+    skillGroups:[
+      {name:"编程与数据",tags:["Python","SQL","R","Power BI"]},
+      {name:"建模与分析",tags:["数学建模","机器学习","统计分析","优化方法"]},
+      {name:"写作与排版",tags:["Overleaf / LaTeX","学术论文写作"]},
+      {name:"设计工具",tags:["秀米","可画"]},
+      {name:"语言",tags:["大学英语六级","雅思","GRE"]}
+    ],
+    contact:[["GitHub","https://github.com/GloriaShang"],["邮箱","u430036113@mail.bnbu.edu.cn"]]
+  }
+},
+en:{
+  tabs:["Cover","Education","Competitions","Internship","Campus","Hobbies","Portfolio","Contact"],
+  cover:{
+    name:"Gloria Shang",
+    tagline:"Business Analytics undergraduate, using mathematical models to make sense of real-world decisions",
+    meta:[
+      ["School","Beijing Normal - Hong Kong Baptist University · Business Analytics · Junior"],
+      ["GPA","3.60 / 4.0"],
+      ["Focus","Data Analysis · Mathematical Modeling · AI Applications"]
+    ],
+    seals:["MCM/ICM\nM Award","Huazhong Cup\n1st Prize","GBA Cup\n1st Prize"]
+  },
+  education:{
+    title:"Education",
+    sub:"EDUCATION",
+    items:[
+      {date:"Sep 2024 - Present",title:"Beijing Normal - Hong Kong Baptist University",role:"B.A. Business Analytics · Junior · CGPA 3.60/4",
+       desc:"Core courses: Calculus (A), Linear Algebra (A-), Business Statistics (A), Database Management & SQL (A), Operations Research (A-), AI & Deep Learning (A-), R Programming (A), Optimization Methods (A), Applied Econometrics (A).",
+       thumbs:[]},
+      {date:"Jul 2026",title:"Murray Edwards College, University of Cambridge",role:"Innovation and Entrepreneurship in the Era of AI Summer Programme · Grade 96/100 (A+)",
+       desc:"Modules: AI Co-Creation Workshop, New Technologies Risk and Responsibility, Business: The Age of Intelligence — From Hype to Value. Completed assessed modules Business Strategy and AI and Digital Innovation, 38+ contact hours.",
+       thumbs:[["cambridge_certificate-1","Certificate"],["cambridge_transcript-1","Transcript 96%"],["photo2","Evening on campus"],["photo5","King's College, Cambridge"],["photo6","College entrance"],["photo4_with_professor","Closing ceremony"],["photo7_formal_hall","Formal Hall dinner"]]}
+    ]
+  },
+  competitions:{
+    title:"Competitions",
+    sub:"COMPETITIONS",
+    items:[
+      {date:"Feb 2026",title:"MCM/ICM (Mathematical Contest in Modeling)",role:"Team Leader · Meritorious Winner",
+       desc:"Modeled a dynamic \"competition-finance\" decision system for professional sports. Led multi-source data integration, visualization, and core model design. Built a four-layer optimization system (SF-DOS), applied logistic regression to identify strategy switch points, and used nonlinear programming to derive Player Value Index (PVI) and ROI efficiency frontier.",
+       thumbs:[["mcm_M奖-1","M Award Certificate"]]},
+      {date:"Nov 2025",title:"6th GBA Cup Financial Mathematical Modeling Contest",role:"Individual · 1st Prize · Innovation Bronze Award",
+       desc:"Event-driven trading volume modeling: built an integrated framework for event identification, volatility forecasting and risk control on A-share market data, using exponential/logistic decay models, GARCH/HAR-RV volatility models, and mean-variance optimization with rolling CVaR.",
+       thumbs:[["bay_area_cup_一等奖","1st Prize Certificate"],["bay_area_cup_创新铜奖","Innovation Bronze Certificate"]]},
+      {date:"Jul 2025",title:"4th National Data Analysis Popular Science Competition",role:"Theory Track · Guangdong Province 1st Prize · Professional Skill Certificate",
+       desc:"Organized by the China Association for Applied Statistics; assessed professional data-analysis knowledge and practice.",
+       thumbs:[["SPSSPRO_理论赛一等奖","Guangdong 1st Prize"],["SPSSPRO_专业技能证书","Skill Certificate"]]},
+      {date:"May 2025",title:"17th Huazhong Cup Mathematical Modeling Challenge",role:"Team Leader · 1st Prize · Corporate-Named Gold Award",
+       desc:"Employment prediction and job-person matching: led a Stacking ensemble model with multi-source data fusion. Designed a macro-meso-micro analytical framework, used SMOTE-ENN resampling and Bayesian optimization, and built a dynamic-weight matching system reaching 89.2% accuracy.",
+       thumbs:[["华中杯_企业冠名金奖","Gold Award Certificate"],["华中杯_一等奖","1st Prize Certificate"],["华中杯_海报原图","View full poster"]]},
+      {date:"Oct 2023",title:"National High School Math Olympiad (Preliminary)",role:"Heilongjiang Province · 3rd Prize",
+       desc:"Represented Harbin No.9 High School, 3rd Prize in Heilongjiang provincial round.",
+       thumbs:[["高中数学竞赛省三","3rd Prize Certificate"]]}
+    ]
+  },
+  internship:{
+    title:"Internship",
+    sub:"INTERNSHIP",
+    items:[
+      {date:"Jul - Sep 2026",title:"Heilongjiang Provincial Communications Investment Group Co., Ltd.",role:"Business Data Analysis Intern",
+       desc:"Processed road-network traffic data and built visualization dashboards. Used Python/SQL for data processing and Power BI for daily/hourly traffic and peak-hour distribution dashboards, shortening the update cycle from weekly to daily; contributed to route-comparison and holiday-traffic analyses.",thumbs:[]},
+      {date:"Jun - Jul 2026",title:"Heilongjiang Provincial Trading Group Co., Ltd.",role:"Digital Management Intern",
+       desc:"Built a data hub and AI module for a public procurement platform. Cleaned and standardized data across 3 business systems using Python/SQL (~80,000 records), raising table usability from 78% to 95%+; labeled 200+ samples for collusion-detection model training (86% test accuracy); built a dashboard that shortened reporting cycles from weekly to daily.",thumbs:[]}
+    ]
+  },
+  campus:{
+    title:"Campus",
+    sub:"CAMPUS & OUTREACH",
+    items:[
+      {date:"May 2026",title:"14th Faculty of Science & Technology Poster Exhibition",role:"Presenter · Outstanding Poster Award (Faculty of Science & Technology)",
+       desc:"Invited as the Huazhong Cup Gold Award and 1st Prize winner to present the \"Employment Status Prediction\" project and its Stacking ensemble model — the only presenting team from outside the Faculty of Science and Technology (representing the Department of Finance and Economics, Faculty of Business and Management) among the featured math-modeling award winners, and was awarded the Faculty's Outstanding Poster Award.",
+       thumbs:[["海报展_合影1","Team photo"],["海报展_开幕式","Opening ceremony"],["海报展_展位全景","Exhibition hall"],["海报展_优秀海报奖","Outstanding Poster Award"]]},
+      {date:"Mar 2026",title:"Guest Lecture: Mathematical Modeling & Academic Writing",role:"Speaker · Invited by UIC Math Modeling Club",
+       desc:"As the 2025 Huazhong Cup Gold Award and 1st Prize winner, shared modeling approaches, data processing methods and paper-writing techniques with students preparing for competitions.",
+       thumbs:[["讲座公告截图","Event announcement"],["比赛现场","At the lecture"]]},
+      {date:"2025 - 2026",title:"University Scholarships",role:"Competition Scholarship (2025, 2026) · 1st/2nd Class Scholarship (2026)",
+       desc:"Awarded for competition achievements and academic performance.",thumbs:[]},
+      {date:"Nov 2024",title:"2024 BNBU-HKBU Freshmen Debate Cup",role:"Champion",
+       desc:"Competed as a freshman representative of the university debate team; delivered constructive and cross-examination arguments in the final on motions such as \"whether developing traditional culture through viral content is advisable,\" leading the team to the championship.",
+       thumbs:[["辩论_获奖证书","Award certificate"],["辩论_赛场","Final round"],["辩论_陈词","Making the case"],["辩论_颁奖合影","Award ceremony"]]}
+    ]
+  },
+  hobbies:{
+    title:"Hobbies",
+    sub:"PHOTOGRAPHY & TRAVEL",
+    intro:"Photography and travel — the interest in photography mostly grew out of traveling, capturing the places I've been. More photos coming soon.",
+    gallery:[]
+  },
+  portfolio:{
+    title:"Portfolio",
+    sub:"PORTFOLIO · VIBE CODING",
+    intro:"Small projects built from scratch with AI assistance — more on the way.",
+    projects:[
+      {title:"Math Modeling 101",desc:"From-zero modeling guides & prompts",status:"In progress"},
+      {title:"AI Prompt Library",desc:"Searchable, categorized prompt cards",status:"In progress"},
+      {title:"Data Viz Dashboard",desc:"Interactive chart-based analysis",status:"In progress"},
+      {title:"Algorithm Visualizer",desc:"Sorting / graph algorithm demos",status:"In progress"}
+    ]
+  },
+  skills:{
+    title:"Skills & Contact",
+    sub:"SKILLS & CONTACT",
+    skillGroups:[
+      {name:"Programming & Data",tags:["Python","SQL","R","Power BI"]},
+      {name:"Modeling & Analysis",tags:["Math Modeling","Machine Learning","Statistical Analysis","Optimization"]},
+      {name:"Writing & Typesetting",tags:["Overleaf / LaTeX","Academic Writing"]},
+      {name:"Design Tools",tags:["Xiumi","Keyihua"]},
+      {name:"Languages",tags:["CET-6","IELTS","GRE"]}
+    ],
+    contact:[["GitHub","https://github.com/GloriaShang"],["Email","u430036113@mail.bnbu.edu.cn"]]
+  }
+}
+};
+
+let lang = 'zh';
+
+// image paths: thumbs (<=600px) on pages, full (<=1600px) in the lightbox
+const fullSrc  = k => IMG_FILE[k] ? `assets/img/${IMG_FILE[k]}.webp` : '';
+const thumbSrc = k => IMG_FILE[k] ? `assets/img/thumb/${IMG_FILE[k]}.webp` : '';
+const onImgLoad = `onload="this.classList.add('loaded')"`;
+
+// inactive pages keep data-lazy; the real src is set only when the page (or its neighbour) is shown
+function hydrate(pageEl){
+  if(!pageEl) return;
+  pageEl.querySelectorAll('img[data-lazy]').forEach(img=>{
+    img.src = img.dataset.lazy;
+    img.removeAttribute('data-lazy');
+  });
+}
+
+function el(tag, cls, html){
+  const e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(html !== undefined) e.innerHTML = html;
+  return e;
+}
+
+function thumbsHtml(thumbs){
+  if(!thumbs || !thumbs.length) return '';
+  const rotations = [-3,2,-1.5,3,-2,1.5];
+  let html = '<div class="t-thumbs">';
+  thumbs.forEach((t,i)=>{
+    const [key,label] = t;
+    html += `<div class="polaroid" style="--r:${rotations[i%rotations.length]}deg" data-src="${fullSrc(key)}" data-label="${label}">
+      <img class="fade" data-lazy="${thumbSrc(key)}" alt="${label}" decoding="async" ${onImgLoad}><span>${label}</span></div>`;
+  });
+  html += '</div>';
+  return html;
+}
+
+const JADE_BUBBLE = `<svg viewBox="0 0 40 34" aria-hidden="true">
+  <defs>
+  <filter id="bubS" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.4" flood-color="#8a6d33" flood-opacity=".22"/></filter></defs>
+  <path filter="url(#bubS)" fill="#fff" stroke="#D2B574" stroke-opacity=".85" stroke-width="1.3"
+    d="M20 2C30.5 2 38 8 38 15.5S30.5 29 20 29c-2.2 0-4.3-.3-6.2-.8L6 32l2.2-6.3C4.4 23.2 2 19.6 2 15.5 2 8 9.5 2 20 2Z"/>
+  
+</svg>`;
+
+const COLLAGE_LAYOUT = [
+  {key:'photo1',              style:'left:0%;top:10%;--r:-5deg;--tr:-6deg;--pos:50% 60%;'},
+  {key:'photo2',              style:'left:19%;top:0%;--r:4deg;--tr:5deg;--pos:49% 40%;'},
+  {key:'证件照', main:true,  style:'left:38.5%;top:8%;--r:-2deg;--tr:-3deg;--pos:50% 20%;'},
+  {key:'photo3',              style:'left:58%;top:1%;--r:5deg;--tr:4deg;--pos:52% 55%;'},
+  {key:'photo6',              style:'left:77%;top:11%;--r:-4deg;--tr:-5deg;--pos:50% 30%;'}
+];
+
+function renderCover(container, d){
+  const c = d;
+  const collageHtml = COLLAGE_LAYOUT.map(item=>{
+    return `<div class="collage-item${item.main?' main':''}" style="${item.style}" data-src="${fullSrc(item.key)}" data-label="${item.main? c.name : ''}">
+      <span class="tape"></span>
+      <img class="fade" src="${thumbSrc(item.key)}" alt="" decoding="async"${item.main?' fetchpriority="high"':''} ${onImgLoad}>
+    </div>`;
+  }).join('');
+  container.innerHTML = `
+    <div class="cover">
+      <div class="cover-collage">${collageHtml}</div>
+      <div class="cover-text">
+        <div class="cover-name">${c.name}${c.nameStory?`<span class="name-bubble" tabindex="0" role="button" aria-label="名字的由来"><span class="nb-icon">${JADE_BUBBLE}</span><span class="name-pop">${c.nameStory}</span></span>`:''}</div>
+        <div class="cover-tagline">${c.tagline}</div>
+        <div class="cover-meta">
+          ${c.meta.map(m=>`<div><b>${m[0]}：</b>${m[1]}</div>`).join('')}
+        </div>
+        <div class="cover-hint">${lang==='zh' ? '→ 点开右侧标签，翻阅完整经历' : '→ Flip through the tabs on the right'}</div>
+      </div>
+    </div>`;
+  bindCollage();
+  const nb = container.querySelector('.name-bubble');
+  if(!nb) return;
+  const pop = nb.querySelector('.name-pop');
+  // keep the popup inside the page: clamp horizontally, flip below when there is no room above
+  const place = ()=>{
+    const page = nb.closest('.page').getBoundingClientRect();
+    const b = nb.getBoundingClientRect();
+    const w = Math.min(380, page.width - 32);
+    pop.style.width = w + 'px';
+    const left = Math.max(page.left + 16, Math.min(b.left + 14, page.right - 16 - w));
+    pop.style.left = (left - b.left) + 'px';
+    pop.classList.toggle('below', b.top - page.top < pop.offsetHeight + 24);
+  };
+  nb.addEventListener('mouseenter', place);
+  nb.addEventListener('focus', place);
+  nb.addEventListener('click', e=>{ e.stopPropagation(); place(); nb.classList.toggle('open'); });
+}
+document.addEventListener('click', ()=>document.querySelectorAll('.name-bubble.open').forEach(b=>b.classList.remove('open')));
+
+function bindCollage(){
+  const items = [...document.querySelectorAll('.collage-item')];
+  const gallery = items.map(p=>({src:p.dataset.src, label:p.dataset.label}));
+  items.forEach((p,i)=>p.addEventListener('click', ()=>openLightbox(gallery, i)));
+}
+
+function renderTimeline(container, d){
+  let html = `<h1 class="page-title">${d.title}</h1><div class="page-sub">${d.sub}</div><div class="timeline">`;
+  d.items.forEach(it=>{
+    html += `<div class="t-item">
+      <div class="t-date">${it.date}</div>
+      <div class="t-title">${it.title}</div>
+      <div class="t-role">${it.role}</div>
+      <div class="t-desc">${it.desc}</div>
+      ${thumbsHtml(it.thumbs)}
+    </div>`;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function renderSkills(container, d){
+  const s = d.skills;
+  let html = `<h1 class="page-title">${s.title}</h1><div class="page-sub">${s.sub}</div>`;
+  html += '<div class="grid2"><div>';
+  s.skillGroups.forEach(g=>{
+    html += `<div class="skill-block"><h3>${g.name}</h3><div class="skill-tags">
+      ${g.tags.map(t=>`<span class="skill-tag">${t}</span>`).join('')}</div></div>`;
+  });
+  html += '</div><div>';
+  html += `<ul class="contact-list">`;
+  s.contact.forEach(c=>{
+    if(c[0]==='GitHub'||c[0]==='GitHub'){
+      html += `<li><span class="dot"></span>${c[0]}：<a href="${c[1]}" target="_blank">${c[1].replace('https://','')}</a></li>`;
+    } else {
+      html += `<li><span class="dot"></span>${c[0]}：<a href="mailto:${c[1]}">${c[1]}</a></li>`;
+    }
+  });
+  html += '</ul>';
+  html += '</div></div>';
+  container.innerHTML = html;
+}
+
+function renderPortfolio(container, d){
+  let html = `<h1 class="page-title">${d.title}</h1><div class="page-sub">${d.sub}</div>`;
+  html += `<div class="hobbies-intro">${d.intro}</div><div class="project-links">`;
+  d.projects.forEach(p=>{
+    html += `<div class="project-card">
+      <div class="pc-title">${p.title}</div>
+      <div class="pc-desc">${p.desc}</div>
+      <span class="pc-status">${p.status}</span>
+    </div>`;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function renderHobbies(container, d){
+  let html = `<h1 class="page-title">${d.title}</h1><div class="page-sub">${d.sub}</div>`;
+  html += `<div class="hobbies-intro">${d.intro}</div>`;
+  if(d.gallery && d.gallery.length){
+    html += '<div class="hobby-gallery">';
+    d.gallery.forEach(g=>{
+      html += `<div class="hobby-photo" data-src="${fullSrc(g[0])}" data-label="${g[1]||''}"><img class="fade" data-lazy="${thumbSrc(g[0])}" alt="${g[1]||''}" decoding="async" ${onImgLoad}></div>`;
+    });
+    html += '</div>';
+  } else {
+    html += `<div class="hobby-empty">${lang==='zh' ? '照片陆续整理中…' : 'Photos coming soon…'}</div>`;
+  }
+  container.innerHTML = html;
+  const hp = [...container.querySelectorAll('.hobby-photo')];
+  const gallery = hp.map(p=>({src:p.dataset.src, label:p.dataset.label||''}));
+  hp.forEach((p,i)=>p.addEventListener('click', ()=>openLightbox(gallery, i)));
+}
+
+
+const RENDERERS = {
+  cover: renderCover,
+  education: renderTimeline,
+  competitions: renderTimeline,
+  internship: renderTimeline,
+  campus: renderTimeline,
+  hobbies: renderHobbies,
+  portfolio: renderPortfolio,
+  skills: renderSkills
+};
+
+const SECTION_KEYS = ['cover','education','competitions','internship','campus','hobbies','portfolio','skills'];
+let activeIndex = 0;
+
+function buildPages(){
+  const area = document.getElementById('pagesInner');
+  area.innerHTML = '';
+  const d = DATA[lang];
+  SECTION_KEYS.forEach((key,i)=>{
+    const page = el('div','page'+(i===activeIndex?' active':''));
+    page.dataset.index = i;
+    page.dataset.key = key;
+    const num = el('div','page-num', 'Page '+String(i+1).padStart(2,'0')+' / '+SECTION_KEYS.length);
+    page.appendChild(num);
+    const content = el('div','page-content');
+    page.appendChild(content);
+    area.appendChild(page);
+    RENDERERS[key](content, key==='skills'? d : d[key]);
+  });
+  bindPolaroids();
+}
+
+function buildTabs(){
+  const tabsEl = document.getElementById('tabs');
+  tabsEl.innerHTML = '';
+  DATA[lang].tabs.forEach((label,i)=>{
+    const b = el('button','tab'+(i===activeIndex?' active':''), label);
+    b.addEventListener('click', ()=>{ activeIndex=i; refresh(); });
+    tabsEl.appendChild(b);
+  });
+}
+
+function refresh(){
+  buildTabs();
+  document.querySelectorAll('.page').forEach(p=>{
+    const i = Number(p.dataset.index);
+    p.classList.toggle('active', i===activeIndex);
+    if(Math.abs(i-activeIndex)<=1) hydrate(p);   // current page + neighbours, so flipping feels instant
+  });
+  const prevBtn = document.getElementById('navPrev');
+  const nextBtn = document.getElementById('navNext');
+  if(prevBtn) prevBtn.disabled = activeIndex === 0;
+  if(nextBtn) nextBtn.disabled = activeIndex === SECTION_KEYS.length - 1;
+}
+
+function bindPolaroids(){
+  document.querySelectorAll('.t-thumbs').forEach(row=>{
+    const ps = [...row.querySelectorAll('.polaroid')];
+    const gallery = ps.map(p=>({src:p.dataset.src, label:p.dataset.label}));
+    ps.forEach((p,i)=>p.onclick = ()=>openLightbox(gallery, i));
+  });
+}
+
+// ---- lightbox: the photos of one entry form a gallery (arrows / keys / swipe) ----
+let lb = {items:[], i:0};
+const lbOpen = ()=>document.getElementById('lightbox').classList.contains('show');
+function openLightbox(items, i){
+  lb = {items, i};
+  document.getElementById('lightbox').classList.toggle('single', items.length < 2);
+  showLb();
+  document.getElementById('lightbox').classList.add('show');
+}
+function showLb(){
+  const it = lb.items[lb.i];
+  const img = document.getElementById('lightboxImg');
+  img.style.transform = 'scale(1)'; img.dataset.scale = '1';
+  img.src = it.src; img.alt = it.label;
+  document.getElementById('lightboxDownload').href = it.src;
+  document.getElementById('lightboxDownload').download = it.label || 'photo';
+  document.getElementById('lightboxLabel').textContent = it.label;
+  document.getElementById('lbCount').textContent = `${lb.i+1} / ${lb.items.length}`;
+}
+function stepLb(d){
+  if(lb.items.length < 2) return;
+  lb.i = (lb.i + d + lb.items.length) % lb.items.length;
+  showLb();
+}
+function closeLb(){ document.getElementById('lightbox').classList.remove('show'); }
+
+function setLang(l){
+  lang = l;
+  document.getElementById('langZh').classList.toggle('active', l==='zh');
+  document.getElementById('langEn').classList.toggle('active', l==='en');
+  document.documentElement.lang = (l==='zh'?'zh-CN':'en');
+  document.getElementById('fsLbl').textContent = l==='zh' ? '字号' : 'Text size';
+  document.getElementById('fsReset').textContent = l==='zh' ? '重置' : 'Reset';
+  document.getElementById('fsBtn').title = l==='zh' ? '字号' : 'Text size';
+  document.getElementById('homeLbl').textContent = l==='zh' ? '回到小屋' : 'Back to the cabin';
+  if(window.parent!==window) parent.postMessage({type:'cabin-lang', lang:l}, '*');
+  document.getElementById('brand').textContent = l==='zh' ? "📓 Erxiao's Notebook" : "📓 Gloria's Notebook";
+  buildPages();
+  refresh();
+}
+
+document.getElementById('langZh').addEventListener('click', ()=>setLang('zh'));
+document.getElementById('langEn').addEventListener('click', ()=>setLang('en'));
+document.getElementById('lightboxClose').addEventListener('click', closeLb);
+document.getElementById('lightbox').addEventListener('click', (e)=>{ if(e.target.id==='lightbox') closeLb(); });
+document.getElementById('lbPrev').addEventListener('click', e=>{ e.stopPropagation(); stepLb(-1); });
+document.getElementById('lbNext').addEventListener('click', e=>{ e.stopPropagation(); stepLb(1); });
+(function(){
+  const box = document.getElementById('lightbox');
+  let sx=null, sy=null;
+  box.addEventListener('touchstart', e=>{ sx=e.touches[0].clientX; sy=e.touches[0].clientY; }, {passive:true});
+  box.addEventListener('touchend', e=>{
+    if(sx===null) return;
+    const dx=e.changedTouches[0].clientX-sx, dy=e.changedTouches[0].clientY-sy; sx=null;
+    const zoomed = (document.getElementById('lightboxImg').dataset.scale||'1') !== '1';
+    if(!zoomed && Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)*1.3) stepLb(dx<0?1:-1);
+  }, {passive:true});
+})();
+
+const QS = new URLSearchParams(location.search);
+if(QS.get('embed')==='1') document.documentElement.classList.add('embedded');
+document.getElementById('homeBtn').addEventListener('click', ()=>parent.postMessage({type:'cabin-close'}, '*'));
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && QS.get('embed')==='1' && !lbOpen()) parent.postMessage({type:'cabin-close'}, '*'); });
+setLang(QS.get('lang')==='en' ? 'en' : 'zh');
+
+// ---- Aa: reader-chosen text size (85%-130%), remembered on this device ----
+(function(){
+  const KEY = 'resume-font-scale';
+  const btn = document.getElementById('fsBtn'), pop = document.getElementById('fsPop');
+  const range = document.getElementById('fsRange'), val = document.getElementById('fsVal');
+  function apply(pct, save){
+    document.documentElement.style.setProperty('--fs', pct/100);
+    range.value = pct; val.textContent = pct + '%';
+    if(save){ try{ localStorage.setItem(KEY, String(pct)); }catch(e){} }
+  }
+  let saved = 100;
+  try{ saved = Number(localStorage.getItem(KEY)) || 100; }catch(e){}
+  apply(Math.min(130, Math.max(85, saved)), false);
+  const toggle = open=>{ pop.hidden = !open; btn.setAttribute('aria-expanded', String(open)); };
+  btn.addEventListener('click', e=>{ e.stopPropagation(); toggle(pop.hidden); });
+  pop.addEventListener('click', e=>e.stopPropagation());
+  document.addEventListener('click', ()=>toggle(false));
+  range.addEventListener('input', ()=>apply(Number(range.value), true));
+  document.getElementById('fsReset').addEventListener('click', ()=>apply(100, true));
+})();
+
+// once the cover is fully painted, quietly warm up the remaining pages' thumbnails
+window.addEventListener('load', ()=>{
+  const idle = window.requestIdleCallback || (fn=>setTimeout(fn, 1200));
+  idle(()=>document.querySelectorAll('.page').forEach(hydrate));
+});
+
+// page navigation: nav buttons, edge tap zones, swipe, keyboard
+function goToIndex(i){
+  activeIndex = Math.max(0, Math.min(SECTION_KEYS.length - 1, i));
+  refresh();
+}
+function nextPage(){ goToIndex(activeIndex + 1); }
+function prevPage(){ goToIndex(activeIndex - 1); }
+
+document.getElementById('navPrev').addEventListener('click', prevPage);
+document.getElementById('navNext').addEventListener('click', nextPage);
+document.getElementById('navZoneLeft').addEventListener('click', prevPage);
+document.getElementById('navZoneRight').addEventListener('click', nextPage);
+
+document.addEventListener('keydown', (e)=>{
+  if(lbOpen()){
+    if(e.key === 'ArrowLeft') stepLb(-1);
+    if(e.key === 'ArrowRight') stepLb(1);
+    if(e.key === 'Escape') closeLb();
+    return;
+  }
+  if(e.key === 'ArrowLeft') prevPage();
+  if(e.key === 'ArrowRight') nextPage();
+});
+
+(function(){
+  const area = document.getElementById('pagesInner');
+  let touchStartX = null, touchStartY = null;
+  area.addEventListener('touchstart', (e)=>{
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, {passive:true});
+  area.addEventListener('touchend', (e)=>{
+    if(touchStartX === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5){
+      if(dx < 0) nextPage(); else prevPage();
+    }
+    touchStartX = null;
+  }, {passive:true});
+})();
+
+// lightbox zoom (click to zoom toggle + wheel zoom, centered on cursor)
+(function(){
+  const img = document.getElementById('lightboxImg');
+  if(!img) return;
+  let scale = 1;
+  img.style.transition = 'transform .18s ease';
+  img.style.cursor = 'zoom-in';
+
+  function setOrigin(e){
+    const rect = img.getBoundingClientRect();
+    const ox = ((e.clientX - rect.left) / rect.width) * 100;
+    const oy = ((e.clientY - rect.top) / rect.height) * 100;
+    img.style.transformOrigin = `${ox}% ${oy}%`;
+  }
+  function apply(){
+    img.dataset.scale = String(scale);
+    img.style.transform = `scale(${scale})`;
+    img.style.cursor = scale > 1 ? 'zoom-out' : 'zoom-in';
+  }
+  img.addEventListener('load', ()=>{ scale = 1; img.style.cursor = 'zoom-in'; });
+  img.addEventListener('click', (e)=>{
+    setOrigin(e);
+    scale = scale > 1 ? 1 : 2.6;
+    apply();
+  });
+  img.addEventListener('wheel', (e)=>{
+    e.preventDefault();
+    setOrigin(e);
+    scale += (e.deltaY < 0 ? 0.35 : -0.35);
+    scale = Math.max(1, Math.min(5, scale));
+    apply();
+  }, {passive:false});
+  document.getElementById('lightboxClose').addEventListener('click', ()=>{ scale=1; img.style.transform='scale(1)'; });
+  document.getElementById('lightbox').addEventListener('click', (e)=>{
+    if(e.target.id==='lightbox'){ scale=1; img.style.transform='scale(1)'; }
+  });
+})();
+
+</script>
+</body>
+</html>
